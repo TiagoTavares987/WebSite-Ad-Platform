@@ -16,7 +16,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->user()->is_admin)
+        if (!auth()->user()->is_admin) // verifica se é admin e se nao for nao vai ter acesso a funcionalidades do admin atraves do url
             return redirect()->route('verification')->with(['verification' => ['title'=>'Administrador', 'message'=>'Voçê não tem direitos de administrador!']]);
 
         return $next($request);

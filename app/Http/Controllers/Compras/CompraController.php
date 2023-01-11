@@ -9,8 +9,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use Session;
-use Stripe;
+use Stripe\Charge;
+use Stripe\Stripe;
 
 class CompraController extends Controller
 {
@@ -50,23 +50,27 @@ class CompraController extends Controller
         $data = $request->all();
         if (array_key_exists("adId", $data) && array_key_exists("price", $data) && array_key_exists("quantity", $data))
         {
-            /*Stripe::setApiKey(env('STRIPE_SECRET'));    
+            Stripe::setApiKey(env('STRIPE_SECRET'));    
 
-            Charge::create ([
+            if(Charge::create ([
                     "amount" => 100 * 100,
                     "currency" => "usd",
                     "source" => $request->stripeToken,
                     "description" => "Test payment from itsolutionstuff.com." 
-            ]);*/
-
-            Compra::create([
-                'compradorId' => auth()->user()->id,
-                'anuncioId' => $data['adId'],
-                'preco' => $data['price'],
-                'quantidade' => $data['quantity'],
-            ]);
-
-            return redirect()->route('report.buys');
+            ]) != null)
+            {
+                if(Compra::create([
+                    'compradorId' => auth()->user()->id,
+                    'anuncioId' => $data['adId'],
+                    'preco' => $data['price'],
+                    'quantidade' => $data['quantity'],
+                ]) != null)
+                    return redirect()->route('report.buys');
+                else
+                    return redirect()->back()->withErrors(['error'=>'Falha na compra']);
+            }
+            else
+                return redirect()->back()->withErrors(['error'=>'Falha no pagamento ']);
         }
 
         return redirect()->route('dashboard');

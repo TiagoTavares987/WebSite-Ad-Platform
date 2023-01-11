@@ -50,14 +50,14 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $data = $request->all();
-        $validator=$this->validator($data);
+        $data = $request->all(); //  buscar todos dados do form
+        $validator=$this->validator($data); 
         if($validator->fails())
             return redirect()->back()->withErrors($validator);        
         
         if (auth()->attempt(array('email' => $data['email'], 'password' => $data['password'])))
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard'); 
         else
-            return redirect()->back()->withErrors(['error' => 'Email or Password Are Wrong']);
+            return redirect()->back()->withErrors(['error' => 'Email ou Password erradas.']);
     }
 }

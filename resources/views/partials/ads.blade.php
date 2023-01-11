@@ -61,6 +61,7 @@
                         <div class="card-header">{{ __('Não existem anuncios') }}</div>
                     @endif
                 </div>
+                {{ $ads->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>

@@ -40,6 +40,7 @@ class UsersController extends Controller
                 return redirect()->back()->withErrors(['error'=>'O administrador não se pode retirar a si']);
         }
 
+        // guardar user na bd
         $list = User::where('id', $data['id'])->get();
         
         if($list != null && !$list->isEmpty()){

@@ -26,9 +26,12 @@ Route::get('/', [AnunciosController::class, 'index'])->name('root');
 Auth::routes(['verify' => true]);
 
 Route::get('/verification', ['uses' => function () {
+    // verificar se a sessao tem uma verificacao
+    // parte do user bloqueado
     if(session()->has('verification'))
     {
         $verification = session()->get('verification');
+        
         if($verification != null && is_array($verification) && array_key_exists('title', $verification) && array_key_exists('message', $verification))
         return view('auth.verification', $verification);
     }        
@@ -61,3 +64,5 @@ Route::post('/buy', [CompraController::class, 'buy'])->name('buy');
 Route::get('/report/ads', [RelatorioController::class, 'ads'])->name('report.ads');
 Route::get('/report/sales', [RelatorioController::class, 'sales'])->name('report.sales');
 Route::get('/report/buys', [RelatorioController::class, 'buys'])->name('report.buys');
+
+

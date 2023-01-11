@@ -64,30 +64,32 @@ class UserController extends Controller
         }
 
         $deleteImage = null;
+        //checkbox
         if(array_key_exists('hasImage', $data))
         {
-            if (array_key_exists('imageId', $data))
+            if (array_key_exists('imageId', $data)) // ficheiro que escolhi no form
             {
-                $imageId = PhotoController::SavePhoto($request, auth()->user()->imageId);
+                $imageId = PhotoController::SavePhoto($request, auth()->user()->imageId); // se meter novo grava
                 if($imageId == null)
                     return redirect()->back()->withErrors(['error'=>'Falha na atualização da photo']);
 
                 if(auth()->user()->imageId != $imageId)
                     $fields['imageId'] = $imageId;
             } else {
-                $fields['imageId'] = null;
-                $deleteImage = auth()->user()->imageId;
+                // marca a img para apagar
+                $fields['imageId'] = null;  
+                $deleteImage = auth()->user()->imageId; 
             }
         }
 
         if(auth()->user()->update($fields, [])){
             if (auth()->user()->imageId != $fields['imageId'] && $deleteImage != null)
-                PhotoController::DeletePhoto($deleteImage);
+                PhotoController::DeletePhoto($deleteImage); // apaga a foto antiga
             return redirect()->back()->withErrors(['success'=>'Perfil atualizado']);
         }
         else  {
             if (auth()->user()->imageId != $fields['imageId'] && $fields['imageId'] != null)
-                PhotoController::DeletePhoto($fields['imageId']);
+                PhotoController::DeletePhoto($fields['imageId']); // apaga a foto que meteu
             return redirect()->back()->withErrors(['error'=>'Falha na atualização do perfil']);
         }
     }

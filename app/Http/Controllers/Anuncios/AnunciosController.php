@@ -14,7 +14,6 @@ class AnunciosController extends AdController
         if(session()->missing(self::redirected))
             session()->put('adsConfig', (object) ['search' => (object) ['text' => null, 'searchDescription' => false], 'sort' => 0]);
 
-        $ads = null;
         $adsConfig = session()->get('adsConfig');
 
         $query = Anuncio::where('apagado', false);
@@ -22,32 +21,31 @@ class AnunciosController extends AdController
             $query = $query->where('nome', 'LIKE', '%'.$adsConfig->search->text.'%');
             if ($adsConfig->search->searchDescription) 
                 $query = $query->orWhere('descricao', 'LIKE', '%'.$adsConfig->search->text.'%');
-        }        
-        $ads = $query->get();
-
+        } 
+        
         if($adsConfig->sort > 0)
         {            
             switch($adsConfig->sort)
             {
                 case 1:
-                    $ads = $ads->sortBy('preco');
+                    $query = $query->orderBy('preco');
                     break;
                     
                 case 2:
-                    $ads = $ads->sortByDesc('preco');
+                    $query = $query->orderBy('preco', 'desc');
                     break;
                     
                 case 3:
-                    $ads = $ads->sortBy('updated_at');
+                    $query = $query->orderBy('updated_at', 'desc');
                     break;
                     
                 case 4:
-                    $ads = $ads->sortByDesc('updated_at');
+                    $query = $query->orderBy('updated_at');
                     break;
             }
         }
 
-        return view('ads', ['ads' => $ads, 'search' => $adsConfig->search]);
+        return view('ads', ['ads' => $query->paginate(9), 'search' => $adsConfig->search]);
     }
 
     public function search(Request $request)
@@ -64,12 +62,12 @@ class AnunciosController extends AdController
 
     public function sort(Request $request)
     {
-        $data = $request->all();
+        $data = $request->all();// buscar dados do formulario
         if(array_key_exists('sort', $data)){
-            $adsConfig = session()->get('adsConfig');
-            $adsConfig->sort = $data['sort'];
+            $adsConfig = session()->get('adsConfig'); // buscar toda a configuraçao guardada na sessao
+            $adsConfig->sort = $data['sort']; // vai por a info do formulario na variavel de sessao
         }
-        session()->flash(self::redirected, self::redirected);
+        session()->flash(self::redirected, self::redirected); // guarda uma variavel para a proxima chamada
         return redirect()->route('ads');
     }
 
@@ -79,6 +77,6 @@ class AnunciosController extends AdController
         if($ad==null)
             return redirect()->route('ads');
         else
-            return view('ad.view', ['ad' => $this->getAd($request)]);
+            return view('ad.view', ['ad' => $ad]);
     }
 }
