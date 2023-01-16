@@ -67,7 +67,11 @@
 
                             <div class='col-xs-12 form-group required'>
 
+<<<<<<< HEAD
                                 <label class='control-label'>Name on Card</label> <input
+=======
+                                <label class='control-label'>Nome do Cartão</label> <input
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 
                                     class='form-control' size='4' type='text'>
 
@@ -81,7 +85,11 @@
 
                             <div class='col-xs-12 form-group card required'>
 
+<<<<<<< HEAD
                                 <label class='control-label'>Card Number</label> <input
+=======
+                                <label class='control-label'>Numero do Cartão</label> <input
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 
                                     autocomplete='off' class='form-control card-number' size='20'
 
@@ -107,7 +115,11 @@
 
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
 
+<<<<<<< HEAD
                                 <label class='control-label'>Expiration Month</label> <input
+=======
+                                <label class='control-label'>Mês de Expiração</label> <input
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 
                                     class='form-control card-expiry-month' placeholder='MM' size='2'
 
@@ -117,7 +129,11 @@
 
                             <div class='col-xs-12 col-md-4 form-group expiration required'>
 
+<<<<<<< HEAD
                                 <label class='control-label'>Expiration Year</label> <input
+=======
+                                <label class='control-label'>Ano de Expiração</label> <input
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 
                                     class='form-control card-expiry-year' placeholder='YYYY' size='4'
 
@@ -133,9 +149,15 @@
 
                             <div class='col-md-12 error form-group hide'>
 
+<<<<<<< HEAD
                                 <div class='alert-danger alert'>Please correct the errors and try
 
                                     again.</div>
+=======
+                                <div class='alert-danger alert'>Por Favor corriga os erros e tenta novamente.
+
+                                </div>
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 
                             </div>
 
@@ -147,7 +169,11 @@
 
                             <div class="col-xs-12">
 
+<<<<<<< HEAD
                                 <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ({{ $buy->preco }} €)</button>
+=======
+                                <button class="btn btn-primary btn-lg btn-block" type="submit">Pagar Agora ({{ $buy->preco }}€)</button>
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 
                             </div>
 

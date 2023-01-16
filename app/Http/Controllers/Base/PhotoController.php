@@ -16,6 +16,7 @@ class PhotoController extends Controller
     
     // foto da pessoa que esta logada
     public static function GetPhoto(){
+        // self -> estatico
         return Auth::user() ? self::obter(Auth::user()->imageId, self::PhotosPath, Auth::user()->is_admin ? "adminLogo.png" : "userLogo.png") : null;
     }    
 

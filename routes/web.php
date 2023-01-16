@@ -27,6 +27,10 @@ Auth::routes(['verify' => true]);
 
 Route::get('/verification', ['uses' => function () {
     // verificar se a sessao tem uma verificacao
+<<<<<<< HEAD
+=======
+    // parte do user bloqueado
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
     if(session()->has('verification'))
     {
         $verification = session()->get('verification');
@@ -64,8 +68,11 @@ Route::get('/report/ads', [RelatorioController::class, 'ads'])->name('report.ads
 Route::get('/report/sales', [RelatorioController::class, 'sales'])->name('report.sales');
 Route::get('/report/buys', [RelatorioController::class, 'buys'])->name('report.buys');
 
+<<<<<<< HEAD
 // Route::controller(CompraController::class)->group(function(){
 //     Route::post('payment', 'payment')->name('payment');
 //     Route::post('buy', 'buy')->name('buy');
 // });
+=======
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 

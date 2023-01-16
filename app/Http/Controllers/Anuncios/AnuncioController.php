@@ -36,7 +36,7 @@ class AnuncioController extends AdController
     {
         $ad = $this->getAd($request);
 
-        $isNew = $ad == null;
+        $isNew = $ad == null; // caso nao exista anuncio
         if ($isNew)
         {
             $ad = new Anuncio();
@@ -52,7 +52,7 @@ class AnuncioController extends AdController
             if (array_key_exists('quantidade', $data))
                 $ad->quantidade = $data['quantidade'];
         }
-        else if(auth()->user()->id != $ad->vendedorId && !auth()->user()->is_admin)
+        else if(auth()->user()->id != $ad->vendedorId && !auth()->user()->is_admin) // para nao editar o anuncio de outra pessoa caso nao for o proprio ou admin
             return redirect()->route('ads');
 
         return view('ad.form', ['isNew' => $isNew, 'ad' => $ad]);
@@ -88,7 +88,7 @@ class AnuncioController extends AdController
             return redirect()->back()->withErrors(['error'=>'Falha na gravação do anuncio']);
     }
 
-    public function update(Request $request)
+    public function update(Request $request) // edit com foto
     {
         $data = $request->all();
         $validator=$this->validator($data);

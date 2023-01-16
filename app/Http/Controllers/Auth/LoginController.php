@@ -37,4 +37,28 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+<<<<<<< HEAD
+=======
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->all(); //  buscar todos dados do form
+        $validator=$this->validator($data); 
+        if($validator->fails())
+            return redirect()->back()->withErrors($validator);        
+        
+        if (auth()->attempt(array('email' => $data['email'], 'password' => $data['password'])))
+            return redirect()->route('dashboard'); 
+        else
+            return redirect()->back()->withErrors(['error' => 'Email ou Password erradas.']);
+    }
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
 }

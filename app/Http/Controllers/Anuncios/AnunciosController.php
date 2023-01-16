@@ -62,7 +62,11 @@ class AnunciosController extends AdController
 
     public function sort(Request $request)
     {
+<<<<<<< HEAD
         $data = $request->all();// buscar dados do formulario(o q o user picar na pagina)
+=======
+        $data = $request->all();// buscar dados do formulario
+>>>>>>> a13c9e55b364bfc48f7777951bf70960f4c8b59c
         if(array_key_exists('sort', $data)){
             $adsConfig = session()->get('adsConfig'); // buscar toda a configuraçao guardada na sessao
             $adsConfig->sort = $data['sort']; // vai por a info do formulario na variavel de sessao
