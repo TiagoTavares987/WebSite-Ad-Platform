@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Data: 08-01-2023
- * Autores:
- * Diana Marques 39845
- * Marcio Godinho 40126
- * Tiago Tavares 38609
- */
-
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 

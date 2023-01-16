@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Base\Controller;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use App\Http\Controllers\Base\Controller;
+
 
 class ConfirmPasswordController extends Controller
 {
@@ -35,6 +37,6 @@ class ConfirmPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'isBlocked']);
+        $this->middleware('auth');
     }
 }

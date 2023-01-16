@@ -55,7 +55,13 @@
 
                 <div class="card-header">
                     <span>{{ __('Preco:') }} {{ $ad->preco }}</span>
-                    <span>{{ __('Disponivel:') }} {{ $ad->quantidade }}</span>                    
+                    <span>{{ __('Disponivel:') }} 
+                        @if($ad->disponivel == null || $ad->disponivel == "")
+                            {{ $ad->quantidade }}
+                        @else
+                            {{ $ad->disponivel }}
+                        @endif
+                    </span>                    
                 </div>
                 <div class="card-header">
                     @guest
@@ -66,7 +72,10 @@
                             <img src="{{ asset('storage/images/shop_cart.png') }}" width="30px"/>
                         </button>
                     @else
-                    @if($ad->vendedorId != Auth()->user()->id)
+
+                    @if($ad->vendedorId != Auth()->user()->id 
+                        && (($ad->disponivel > 0 && $ad->disponivel != null && $ad->disponivel != "")
+                            || ($ad->quantidade > 0 && ($ad->disponivel == null || $ad->disponivel == ""))))
                         <form action="{{ route('payment') }}" method="POST">
                             @csrf
 

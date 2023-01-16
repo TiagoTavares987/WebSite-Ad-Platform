@@ -14,6 +14,7 @@ class PhotoController extends Controller
     private const PhotosPath = '/fotos/';
     private const AdsPath = '/ads/';
     
+    // foto da pessoa que esta logada
     public static function GetPhoto(){
         return Auth::user() ? self::obter(Auth::user()->imageId, self::PhotosPath, Auth::user()->is_admin ? "adminLogo.png" : "userLogo.png") : null;
     }    
@@ -53,7 +54,7 @@ class PhotoController extends Controller
 
         if($id != null)
         {
-            $photo = Photo::find($id);
+            $photo = Photo::find($id);  
             if($photo != null)
             {
                 $file = $path.$storagePath.$photo->path;
@@ -72,16 +73,16 @@ class PhotoController extends Controller
     {
         $request->validate([$fieldname => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',]);
         
-        $name = $request->file($fieldname)->getClientOriginalName();
+        $name = $request->file($fieldname)->getClientOriginalName(); 
         $path = $request->file($fieldname)->hashName();
-        $request->file($fieldname)->store('public'.$storagePath);
+        $request->file($fieldname)->store('public'.$storagePath);// grava a imagem no disco
 
         if ($id != null) {
-            $photo = Photo::find($id);
+            $photo = Photo::find($id); // buscar foto
             if ($photo != null) {
-                $oldPath = $photo->path;
-                if (self::atualizar($photo, $name, $path)) {
-                    self::apagarFicheiro($storagePath . $oldPath);
+                $oldPath = $photo->path; // guardar o old path para apagar no disco
+                if (self::atualizar($photo, $name, $path)) { // atualiza na bd com o novo path
+                    self::apagarFicheiro($storagePath . $oldPath); // apagar no disco o ficheiro antigo
                     return $id;
                 } else
                     return null;

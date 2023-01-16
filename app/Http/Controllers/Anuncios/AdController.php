@@ -14,7 +14,13 @@ class AdController extends Controller
 
         $data = $request->all();
         if(array_key_exists('adId', $data)){
-            $list = Anuncio::where('id', $data['adId'])->get();
+            $list = Anuncio::select('anuncios.*')->selectRaw('(anuncios.quantidade - sum(compras.quantidade)) as disponivel')
+            // //->selectRaw('anuncios.quantidade - sum(ISNULL(compras.quantidade,0))) as disponivel')
+            ->leftJoin('compras', 'anuncios.id', '=', 'compras.anuncioId')
+            ->where('anuncios.id', $data['adId'])
+            ->groupBy('anuncios.id')
+            ->get();
+
             if($list != null && !$list->isEmpty()){
                 $ad = $list[0];
             }

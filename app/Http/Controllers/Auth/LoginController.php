@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Base\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -38,26 +36,5 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-    }
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
-        ]);
-    }
-
-    public function login(Request $request)
-    {
-        $data = $request->all();
-        $validator=$this->validator($data);
-        if($validator->fails())
-            return redirect()->back()->withErrors($validator);        
-        
-        if (auth()->attempt(array('email' => $data['email'], 'password' => $data['password'])))
-            return redirect()->route('dashboard');
-        else
-            return redirect()->back()->withErrors(['error' => 'Email or Password Are Wrong']);
     }
 }
